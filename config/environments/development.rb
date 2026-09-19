@@ -77,4 +77,17 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+
+  # Allow additional development hosts via environment variables (comma-separated, e.g. ".trycloudflare.com, my-host.com")
+  if (allowed_hosts = ENV["RAILS_DEVELOPMENT_HOSTS"] || ENV["ALLOWED_HOSTS"])
+    config.hosts.concat(allowed_hosts.split(",").map(&:strip))
+  end
+
+  if (default_url = ENV["RAILS_DEFAULT_URL"])
+    begin
+      uri = URI.parse(default_url)
+      config.hosts << uri.host if uri&.host.present?
+    rescue URI::InvalidURIError
+    end
+  end
 end
