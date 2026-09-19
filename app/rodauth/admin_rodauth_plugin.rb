@@ -97,7 +97,9 @@ class AdminRodauthPlugin < RodauthPlugin
 
     send_email do |email|
       # queue email delivery on the mailer after the transaction commits
-      db.after_commit { email.deliver_later }
+      db.after_commit do
+        Rails.env.development? ? email.deliver_now : email.deliver_later
+      end
     end
 
     # ==> Flash
