@@ -9,5 +9,7 @@ end
 
 # mount our app
 Rails.application.routes.draw do
-  mount AdminPortal::Engine, at: "/admin"
+  constraints Rodauth::Rails.authenticate(:admin) do
+    mount AdminPortal::Engine, at: "/admin"
+  end
 end

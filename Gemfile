@@ -75,3 +75,15 @@ gem "standard", ">= 1.35.1", group: :development
 gem "letter_opener", "~> 1.10", group: :development
 
 gem "actual_db_schema", "~> 0.9.2", groups: [:development, :test]
+
+gem "bcrypt", "~> 3.1"
+
+gem "sequel-activerecord_connection", "~> 2.0"
+
+gem "tilt", "~> 2.9"
+
+gem "rodauth-rails", "~> 2.2"
+
+gem "rotp", "~> 6.3"
+
+gem "rqrcode", "~> 3.2"
