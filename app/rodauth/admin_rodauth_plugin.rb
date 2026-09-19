@@ -194,14 +194,14 @@ class AdminRodauthPlugin < RodauthPlugin
 
     # ==> Redirects
 
-    # Redirect to home after login.
-    create_account_redirect "/"
+    # Redirect to admin dashboard after login.
+    create_account_redirect "/admin"
 
-    # Redirect to home after login.
-    login_redirect "/"
+    # Redirect to admin dashboard after login.
+    login_redirect "/admin"
 
-    # Redirect to home page after logout.
-    logout_redirect "/"
+    # Redirect to admin after logout (which directs to admin login).
+    logout_redirect "/admin"
 
     # Redirect to login page after requesting account verification email.
     verify_account_email_sent_redirect { login_path }
