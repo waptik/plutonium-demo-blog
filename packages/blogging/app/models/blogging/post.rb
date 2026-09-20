@@ -1,6 +1,11 @@
 require_relative "../blogging"
 
 class Blogging::Post < Blogging::ResourceRecord
+  # Previous version:
+  #   belongs_to :user
+  # In Rails 5+, belongs_to requires presence by default. Set optional: true so existing
+  # posts from Chapter 2 without a user_id remain valid and can be updated.
+  belongs_to :user, optional: true
   # add concerns above.
 
   # add constants above.

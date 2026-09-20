@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_19_144701) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_20_151016) do
   create_table "admin_active_session_keys", primary_key: ["admin_id", "session_id"], force: :cascade do |t|
     t.integer "admin_id"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
@@ -81,6 +81,38 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_19_144701) do
     t.boolean "published"
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_blogging_posts_on_user_id"
+  end
+
+  create_table "user_login_change_keys", force: :cascade do |t|
+    t.datetime "deadline", null: false
+    t.string "key", null: false
+    t.string "login", null: false
+  end
+
+  create_table "user_password_reset_keys", force: :cascade do |t|
+    t.datetime "deadline", null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "key", null: false
+  end
+
+  create_table "user_remember_keys", force: :cascade do |t|
+    t.datetime "deadline", null: false
+    t.string "key", null: false
+  end
+
+  create_table "user_verification_keys", force: :cascade do |t|
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "key", null: false
+    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password_hash"
+    t.integer "status", default: 1, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, where: "status IN (1, 2)"
   end
 
   add_foreign_key "admin_active_session_keys", "admins"
@@ -92,4 +124,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_19_144701) do
   add_foreign_key "admin_recovery_codes", "admins", column: "id"
   add_foreign_key "admin_remember_keys", "admins", column: "id"
   add_foreign_key "admin_verification_keys", "admins", column: "id"
+  add_foreign_key "blogging_posts", "users"
+  add_foreign_key "user_login_change_keys", "users", column: "id"
+  add_foreign_key "user_password_reset_keys", "users", column: "id"
+  add_foreign_key "user_remember_keys", "users", column: "id"
+  add_foreign_key "user_verification_keys", "users", column: "id"
 end

@@ -17,16 +17,16 @@ class Blogging::PostPolicy < Blogging::ResourcePolicy
   end
 
   def permitted_attributes_for_create
-    [:title, :body, :published]
+    [:title, :body, :published, :user_id]
   end
 
   def permitted_attributes_for_read
-    [:title, :body, :published]
+    [:title, :body, :published, :user, :created_at]
   end
 
   # Associations
 
   def permitted_associations
-    %i[]
+    %i[user]
   end
 end
