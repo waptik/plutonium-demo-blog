@@ -217,6 +217,9 @@ class AdminRodauthPlugin < RodauthPlugin
 
     # ==> Deadlines
     # Change default deadlines for some actions.
+    # Require re-authentication for sensitive actions
+    password_grace_period 3600
+
     # verify_account_grace_period 3.days.to_i
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
