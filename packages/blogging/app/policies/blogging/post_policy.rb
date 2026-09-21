@@ -1,13 +1,31 @@
 class Blogging::PostPolicy < Blogging::ResourcePolicy
   # Core actions
 
-  # def create?
-  #   true
-  # end
+  # Anyone authenticated can create posts
+  def create?
+    true
+  end
 
-  # def read?
-  #   true
-  # end
+  # Anyone can view published posts, and post owner can view draft posts.
+  def read?
+    record.published? || owner?
+  end
+
+  # Only owner can update posts
+  def update?
+    owner?
+  end
+
+  # Only owner can delete posts
+  def destroy?
+    owner?
+  end
+
+  private
+
+  def owner?
+    record.user_id == user.id
+  end
 
   # Core attributes
 
